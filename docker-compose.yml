@@ -1,0 +1,21 @@
+version: "3"
+services:
+  app:
+    container_name: app
+    build: .
+    working_dir: /usr/src/app/server
+    command: nodemon --watch /usr/src/app/server -e js app.js
+    ports:
+      - "3000:3000"
+    # "volumes" serve solo durante lo sviluppo
+    volumes:
+      - ./app:/usr/src/app
+    links:
+      - "mongo:mongohost"
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
