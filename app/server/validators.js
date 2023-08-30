@@ -18,14 +18,46 @@ const validateSignup = checkSchema({
     exists: {
       errorMessage: "Username is required",
     },
+    isString: { errorMessage: "Text should be a string" },
+    trim: true,
+    notEmpty: true,
+    escape: true,
   },
-  name: {},
-  surname: {},
-  bio: {},
+  name: {
+    exists: {
+      errorMessage: "Name is required",
+    },
+    isString: { errorMessage: "Text should be a string" },
+    trim: true,
+    notEmpty: true,
+    escape: true,
+  },
+  surname: {
+    exists: {
+      errorMessage: "Surname is required",
+    },
+    isString: { errorMessage: "Text should be a string" },
+    trim: true,
+    notEmpty: true,
+    escape: true,
+  },
+  bio: {
+    exists: {
+      errorMessage: "Username is required",
+    },
+    isString: { errorMessage: "Text should be a string" },
+    trim: true,
+    notEmpty: true,
+    escape: true,
+  },
   password: {
     exists: {
       errorMessage: "Password is required",
     },
+    isString: { errorMessage: "Text should be a string" },
+    trim: true,
+    notEmpty: true,
+    escape: true,
   },
 
   // text: {

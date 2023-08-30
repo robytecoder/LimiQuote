@@ -22,7 +22,7 @@ router.post(
         .collection("users")
         .findOne({ username: req.body.username });
       if (existingUser !== null) {
-        return res.status(400).json({
+        return res.status(409).json({
           success: false,
           errors: ["Username già utilizzata"],
         });
@@ -96,21 +96,5 @@ router.post("/signout", async (req, res) => {
     res.status(500).json({ success: false, msg: "Errore interno" });
   }
 });
-
-// router.post("/auth/signin", async (req, res) => {
-//   const mongo = db.getDb();
-//   const user = req.body;
-//   await mongo.collection("users")
-//   ...
-//   res.json(user);
-// }); // errori, sanitizzazione, hash(pwd), username unico, express-validator !!!
-// ...oppure...
-// router.post("/login", async (req, res) => {
-//   const mongo = db.getDb();
-//   const { username, password } = req.body;
-//   const user = await mongo.collection("users").f({ username });
-//   if (user?.username === username && user?.password === password) {
-//   }
-// });
 
 module.exports = router;
