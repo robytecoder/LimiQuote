@@ -1,5 +1,6 @@
 const { checkSchema, validationResult } = require("express-validator");
 
+// Schema di validazione per la creazione di un messaggio
 const validateMessage = checkSchema({
   text: {
     exists: {
@@ -13,21 +14,19 @@ const validateMessage = checkSchema({
   },
 });
 
+// Schema di validazione del form di signUp
 const validateSignup = checkSchema({
   username: {
     exists: {
       errorMessage: "Username is required",
     },
-    isString: { errorMessage: "Text should be a string" },
-    trim: true,
-    notEmpty: true,
-    escape: true,
+    isEmail: { errorMessage: "Username should be a valid e-mail address" },
   },
   name: {
     exists: {
       errorMessage: "Name is required",
     },
-    isString: { errorMessage: "Text should be a string" },
+    isString: { errorMessage: "Name should be a string" },
     trim: true,
     notEmpty: true,
     escape: true,
@@ -36,16 +35,16 @@ const validateSignup = checkSchema({
     exists: {
       errorMessage: "Surname is required",
     },
-    isString: { errorMessage: "Text should be a string" },
+    isString: { errorMessage: "Surname should be a string" },
     trim: true,
     notEmpty: true,
     escape: true,
   },
   bio: {
     exists: {
-      errorMessage: "Username is required",
+      errorMessage: "Bio is required",
     },
-    isString: { errorMessage: "Text should be a string" },
+    isString: { errorMessage: "Bio should be a string" },
     trim: true,
     notEmpty: true,
     escape: true,
@@ -54,48 +53,39 @@ const validateSignup = checkSchema({
     exists: {
       errorMessage: "Password is required",
     },
-    isString: { errorMessage: "Text should be a string" },
+    isString: { errorMessage: "Password should be a string" },
     trim: true,
     notEmpty: true,
-    escape: true,
+    isLength: {
+      options: { min: 8 },
+      errorMessage: "The password must be at least 8 characters",
+    },
   },
-
-  // text: {
-  //   exists: {
-  //     errorMessage: "Text is required",
-  //     options: { checkFalsy: true },
-  //   },
-  //   isString: { errorMessage: "Text should be a string" },
-  //   trim: true,
-  //   notEmpty: true,
-  //   escape: true,
-  // },
-  // author: {
-  //   exists: { errorMessage: "Author is required" },
-  //   isString: { errorMessage: "Author should be a string" },
-  //   trim: true,
-  //   notEmpty: true,
-  //   escape: true,
-  // },
-  // userId: {
-  //   exists: { errorMessage: "UserId is required" },
-  //   isInt: { errorMessage: "UserId should be a number" },
-  // },
 });
 
+// Schema di validazione del form di signIn
 const validateSignin = checkSchema({
   username: {
     exists: {
       errorMessage: "Username is required",
     },
+    isEmail: { errorMessage: "Username should be a valid e-mail address" },
   },
   password: {
     exists: {
       errorMessage: "Password is required",
     },
+    isString: { errorMessage: "Password should be a string" },
+    trim: true,
+    notEmpty: true,
+    isLength: {
+      options: { min: 10 },
+      errorMessage: "The password must be at least 10 characters",
+    },
   },
 });
 
+// Gestione degli errori di validazione
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

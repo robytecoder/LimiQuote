@@ -27,8 +27,8 @@ router.get("/messages", async (req, res) => {
 router.delete("/users/:userId", async (req, res) => {
   const mongo = db.getDb();
   const userId = parseInt(req.params.userId);
-  let user = await mongo.collection("users").findOne({ userId: req.params.id });
-  await mongo.collection("users").deleteOne({ userId: userId });
+  let user = await mongo.collection("users").findOne({ id: req.params.id });
+  await mongo.collection("users").deleteOne({ id: userId });
   res.json();
 });
 // Cancella message
@@ -37,8 +37,8 @@ router.delete("/messages/:messageId", async (req, res) => {
   const messageId = parseInt(req.params.messageId);
   let message = await mongo
     .collection("messages")
-    .findOne({ messageId: req.params.messageId });
-  await mongo.collection("messages").deleteOne({ messageId: messageId });
+    .findOne({ id: req.params.messageId });
+  await mongo.collection("messages").deleteOne({ id: messageId });
   res.json();
 });
 
