@@ -12,7 +12,7 @@ onClickOutside(menu, (event) => {
 </script>
 
 <template>
-  <div class="bg-emerald-800 px-4 py-2 text-white flex justify-between">
+  <div class="bg-black px-4 py-2 text-white flex justify-between">
     <div class="flex space-x-5">
       <router-link to="/">
         <h1 class="font-semibold">LimiQuote</h1>

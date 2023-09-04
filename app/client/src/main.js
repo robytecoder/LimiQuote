@@ -1,54 +1,67 @@
 import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
-import Home from "./components/Home.vue";
-import UserSocial from "./components/UserSocial.vue";
-import UserBio from "./components/UserBio.vue";
-import UserMessages from "./components/UserMessages.vue";
-import UserFollowers from "./components/UserFollowers.vue";
-import UserFollowed from "./components/UserFollowed.vue";
+import Auth from "./routes/Auth.vue";
+import Home from "./routes/Home.vue";
+import UserSocial from "./routes/UserSocial.vue";
+import UserBio from "./routes/UserBio.vue";
+import UserMessages from "./routes/UserMessages.vue";
+import UserFollowers from "./routes/UserFollowers.vue";
+import UserFollowed from "./routes/UserFollowed.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: "/", component: Home },
     {
+      name: "home",
+      path: "/",
+      component: Home,
+    },
+    {
+      name: "auth",
+      path: "/auth",
+      component: Auth,
+      // children: [
+      //   {
+      //     name: signIn,
+      //     path: "signIn",
+      //     component: SignIn,
+      //   },
+      //   {
+      //     name: signUp,
+      //     path: "signUp",
+      //     component: SignUp,
+      //   },
+      // ],
+    },
+    {
+      name: "social",
       path: "/social",
       component: UserSocial,
       children: [
         {
+          name: "userBio",
           path: "users/:userId",
           component: UserBio,
         },
         {
+          name: "userMessages",
           path: "messages/:userId",
           component: UserMessages,
         },
         {
+          name: "userFollowers",
           path: "followers/:userId",
           component: UserFollowers,
         },
         {
+          name: "userFollowed",
           path: "followed/:userId",
           component: UserFollowed,
         },
       ],
     },
-    //  {
-    //    path: "/auth",
-    //    component: Auth,
-    //    children: [
-    //      {
-    //        path: "signIn",
-    //        component: SignIn,
-    //      },
-    //      {
-    //        path: "signUp",
-    //        component: SignUp,
-    //      },
-    //    ],
-    //  },
   ],
 });
 

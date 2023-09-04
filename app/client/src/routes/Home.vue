@@ -1,6 +1,6 @@
 <script setup>
 import { user } from "../store";
-import UsersSearch from "./UsersSearch.vue";
+import UsersSearch from "../components/UsersSearch.vue";
 </script>
 
 <template>

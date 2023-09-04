@@ -51,17 +51,17 @@ onClickOutside(searchContainer, () => {
 		</div> -->
     <div>
       <input
-        class="block shadow-sm rounded-full border-gray-200 border px-3 py-0.5 w-60 text-sm"
+        class="block shadow-sm border-gray-200 border px-3 py-0.5 w-60 text-sm"
         type="text"
         v-model="query"
         @focus="searchResults.length ? (showResults = true) : null"
       />
       <!-- @keyup="onSearchChange" -->
     </div>
-    <div v-if="showResults" class="bg-emerald-800 relative">
+    <div v-if="showResults" class="bg-zinc-800 relative">
       <ul class="absolute bg-white shadow-lg rounded w-full top-2">
         <li
-          class="px-4 py-2 hover:bg-emerald-100"
+          class="px-4 py-2 hover:bg-black hover:text-white"
           v-for="result in searchResults"
           :key="result"
         >

@@ -1,5 +1,5 @@
 <script setup></script>
 
 <template>
-  <div>user bio</div>
+  <div>auth</div>
 </template>
