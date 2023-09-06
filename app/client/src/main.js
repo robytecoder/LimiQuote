@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
-import Auth from "./routes/Auth.vue";
+import SignIn from "./routes/SignIn.vue";
 import Home from "./routes/Home.vue";
 import UserSocial from "./routes/UserSocial.vue";
 import UserBio from "./routes/UserBio.vue";
@@ -21,43 +21,42 @@ const router = createRouter({
     {
       name: "auth",
       path: "/auth",
-      component: Auth,
-      // children: [
-      //   {
-      //     name: signIn,
-      //     path: "signIn",
-      //     component: SignIn,
-      //   },
-      //   {
-      //     name: signUp,
-      //     path: "signUp",
-      //     component: SignUp,
-      //   },
-      // ],
+      children: [
+        {
+          name: "signIn",
+          path: "signIn",
+          component: SignIn,
+        },
+        // {
+        //   name: "signUp",
+        //   path: "signUp",
+        //   component: SignUp,
+        // },
+      ],
     },
     {
-      name: "social",
-      path: "/social",
+      // name: "social",
+      path: "/social/users/:userId",
       component: UserSocial,
       children: [
         {
           name: "userBio",
-          path: "users/:userId",
+          path: "bio",
           component: UserBio,
         },
         {
           name: "userMessages",
-          path: "messages/:userId",
+          path: "messages",
           component: UserMessages,
         },
         {
           name: "userFollowers",
-          path: "followers/:userId",
+          path: "followers",
           component: UserFollowers,
         },
         {
           name: "userFollowed",
-          path: "followed/:userId",
+          path: "followed",
           component: UserFollowed,
         },
       ],

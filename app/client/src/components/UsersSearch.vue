@@ -1,7 +1,7 @@
 <script setup>
 import { onClickOutside } from "@vueuse/core";
 import { ref, watchEffect } from "vue";
-import { user } from "../store";
+import { currentUser } from "../store";
 
 const query = ref("");
 const searchResults = ref([]);
@@ -41,7 +41,7 @@ onClickOutside(searchContainer, () => {
 
 <template>
   <div class="text-black" ref="searchContainer">
-    <!-- <div v-if="!user">
+    <!-- <div v-if="!currentUser">
 			<label class="text-xs">Search</label>
 			<input
 				class="block shadow-sm rounded-sm border-gray-200 border px-3 py-2 w-80"
@@ -65,8 +65,9 @@ onClickOutside(searchContainer, () => {
           v-for="result in searchResults"
           :key="result"
         >
+          <!-- :to="`/social/users/${result.id}`" -->
           <router-link
-            :to="`/social/users/${result.id}`"
+            :to="{ name: 'userBio', params: { userId: result.id } }"
             @click="(showResults = false), (query = '')"
             >{{ result.name }} {{ result.surname }}</router-link
           >

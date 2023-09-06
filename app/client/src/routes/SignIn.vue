@@ -1,11 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import { user, updateAuthState } from "../store";
+import { currentUser, updateAuthState } from "../store";
 
 async function login(evt) {
-  const submittedValues = Object.fromEntries(
-    new FormData(evt.currentTarget).entries()
-  );
+  const submittedValues = Object.fromEntries(new FormData(evt.currentTarget));
   const res = await fetch("/api/auth/signin", {
     method: "POST",
     headers: {
@@ -19,7 +17,7 @@ async function login(evt) {
     updateAuthState();
   } else {
     let body = await res.json();
-    signinError.value = body.msg;
+    signinError.value = body.errors;
   }
 }
 
@@ -27,7 +25,7 @@ const signinError = ref(null);
 </script>
 
 <template>
-  <form v-if="!user" @submit.prevent="login">
+  <form v-if="!currentUser" @submit.prevent="login">
     <input class="border" type="text" name="username" />
     <input class="border" type="password" name="password" />
     <button type="submit">Accedi</button>

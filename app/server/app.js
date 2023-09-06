@@ -17,6 +17,9 @@ app.use(cookieParser());
 app.use("/api/auth", auth);
 app.use("/api/social", social);
 app.use("/api/other", other);
+app.use("/api", (req, res) => {
+  res.status(404).send();
+});
 
 app.use(express.static(path.join(__dirname, "../client/dist")), (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));

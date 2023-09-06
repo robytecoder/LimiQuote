@@ -1,17 +1,9 @@
 <script setup>
-import { ref } from "vue";
+import { inject } from "vue";
 
-const bio = ref("");
-
-async function getBio() {
-  const response = await fetch(`/social/users/${result.id}`);
-  if (response.ok) {
-    const result = await response.json();
-    return result.bio;
-  }
-}
+const user = inject("user");
 </script>
 
 <template>
-  <div>user bio</div>
+  <div>{{ user.bio }}</div>
 </template>

@@ -1,19 +1,18 @@
 import { ref } from "vue";
 
-const user = ref(null);
+const currentUser = ref(null);
 
-function setUser(_user) {
-  user.value = _user;
+function setCurrentUser(user) {
+  currentUser.value = user;
 }
 
-// async function updateAuthState() {
-//   fetch("/api/social/whoami").then(async (res) => {
-//     if (res.ok) {
-//       setUser(await res.json());
-//     } else {
-//       setUser(null);
-//     }
-//   });
-// }
+async function updateAuthState() {
+  const res = await fetch("/api/social/whoami");
+  if (res.ok) {
+    setCurrentUser((await res.json()).data);
+  } else {
+    setCurrentUser(null);
+  }
+}
 
-export { user, setUser };
+export { currentUser, setCurrentUser, updateAuthState };

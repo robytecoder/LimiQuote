@@ -1,14 +1,27 @@
 <script setup>
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import { setUser, user } from "../store";
+import { setCurrentUser, currentUser, updateAuthState } from "../store";
 import UsersSearch from "./UsersSearch.vue";
+import { formatUserName } from "../lib";
 
 const showMenu = ref(false);
 const menu = ref(null);
 onClickOutside(menu, (event) => {
   showMenu.value = false;
 });
+
+async function logout() {
+  const res = await fetch("/api/auth/signout", {
+    method: "POST",
+  });
+  console.log(res);
+  if (res.ok) {
+    updateAuthState();
+  }
+  //   let body = await res.json();
+  //   console.log(body);
+}
 </script>
 
 <template>
@@ -20,7 +33,7 @@ onClickOutside(menu, (event) => {
       <UsersSearch />
     </div>
     <div class="flex space-x-5">
-      <span>{{ user ? user.name : "" }}</span>
+      <span>{{ currentUser ? formatUserName(currentUser) : "" }}</span>
 
       <div>
         <svg
@@ -44,13 +57,14 @@ onClickOutside(menu, (event) => {
             class="absolute bg-white text-black right-0 px-3 py-2 shadow-md rounded text-sm"
           >
             <div>
-              <button
-                v-if="!user"
-                @click="setUser({ name: 'Roberto' }), (showMenu = false)"
+              <router-link
+                v-if="!currentUser"
+                :to="{ name: 'signIn' }"
+                @click="showMenu = false"
               >
                 Login
-              </button>
-              <button v-if="user" @click="setUser(null), (showMenu = false)">
+              </router-link>
+              <button v-if="currentUser" @click="logout(), (showMenu = false)">
                 Logout
               </button>
             </div>

@@ -1,5 +1,6 @@
 // Formattatore data dei messaggi
 const formatDate = (currentDate) => {
+  currentDate = new Date(currentDate);
   let date = ("0" + currentDate.getDate()).slice(-2);
   let month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
   let year = currentDate.getFullYear();
@@ -10,6 +11,12 @@ const formatDate = (currentDate) => {
   return messageDate;
 };
 
-module.exports = { formatDate };
+function formatUserName(user) {
+  return user.name && user.surname
+    ? user.name + " " + user.surname
+    : user.username;
+}
+
+export { formatDate, formatUserName };
 
 // const { formatDate } = require("../../client/lib");

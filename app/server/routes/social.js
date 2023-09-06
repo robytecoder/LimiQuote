@@ -145,11 +145,11 @@ router.get("/followers/:userId", requireAuth, async (req, res) => {
       .collection("follows")
       .find({ followedId })
       .toArray();
-    if (follows) {
-      return res.json({ success: true, data: follows });
-    } else {
-      return res.status(404).json({ success: false, errors: ["Bad request"] });
-    }
+    const followersIds = follows.map((follow) => follow.followerId);
+    const followers = await mongo
+      .collection("users")
+      .find({ id: { $in: followersIds } });
+    return res.json(followers.map(({ password, ...user }) => user));
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, msg: "Errore interno" });

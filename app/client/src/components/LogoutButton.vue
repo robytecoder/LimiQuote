@@ -1,5 +1,5 @@
 <script setup>
-import { user, updateAuthState } from "../store";
+import { currentUser, updateAuthState } from "../store";
 
 async function logout() {
   const res = await fetch("/api/auth/signout", {
@@ -16,6 +16,6 @@ async function logout() {
 
 <template>
   <div @click="logout()">
-    <button v-if="user">Logout</button>
+    <button v-if="currentUser">Logout</button>
   </div>
 </template>
