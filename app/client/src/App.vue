@@ -5,7 +5,7 @@ updateAuthState();
 </script>
 
 <template>
-  <div class="bg-slate-100 h-screen flex flex-col">
+  <div class="bg-zinc-200 min-h-screen flex flex-col">
     <Navbar />
 
     <router-view class="flex-1" :key="$route.params.userId" />

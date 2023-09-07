@@ -1,9 +1,11 @@
 <script setup>
-import { ref } from "vue";
-import { onClickOutside } from "@vueuse/core";
-import { setCurrentUser, currentUser, updateAuthState } from "../store";
 import UsersSearch from "./UsersSearch.vue";
 import { formatUserName } from "../lib";
+import { setCurrentUser, currentUser, updateAuthState } from "../store";
+import { onClickOutside } from "@vueuse/core";
+import axios from "axios";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const showMenu = ref(false);
 const menu = ref(null);
@@ -11,30 +13,26 @@ onClickOutside(menu, (event) => {
   showMenu.value = false;
 });
 
-async function logout() {
-  const res = await fetch("/api/auth/signout", {
-    method: "POST",
-  });
-  console.log(res);
-  if (res.ok) {
-    updateAuthState();
-  }
-  //   let body = await res.json();
-  //   console.log(body);
+let router = useRouter();
+
+async function signOut() {
+  const res = await axios.post("/api/auth/signout");
+  updateAuthState();
+  router.push({ name: "home" });
 }
 </script>
 
 <template>
-  <div class="bg-black px-4 py-2 text-white flex justify-between">
+  <div class="bg-black px-10 py-2 text-white flex justify-between">
     <div class="flex space-x-5">
       <router-link to="/">
-        <h1 class="font-semibold">LimiQuote</h1>
+        <h1 class="text-xl font-semibold">LimiQuote</h1>
       </router-link>
       <UsersSearch />
     </div>
-    <div class="flex space-x-5">
-      <span>{{ currentUser ? formatUserName(currentUser) : "" }}</span>
 
+    <div class="flex space-x-5 items-center" v-if="currentUser">
+      <span>{{ formatUserName(currentUser) }}</span>
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,23 +52,41 @@ async function logout() {
         </svg>
         <div class="relative" v-if="showMenu" ref="menu">
           <div
-            class="absolute bg-white text-black right-0 px-3 py-2 shadow-md rounded text-sm"
+            class="absolute top-2 w-24 bg-white text-black right-0 shadow-md rounded text-sm"
           >
-            <div>
-              <router-link
-                v-if="!currentUser"
-                :to="{ name: 'signIn' }"
-                @click="showMenu = false"
-              >
-                Login
-              </router-link>
-              <button v-if="currentUser" @click="logout(), (showMenu = false)">
-                Logout
-              </button>
-            </div>
+            <router-link
+              class="block text-left px-3 py-2 w-full hover:bg-black hover:text-white hover:font-semibold"
+              :to="{ name: 'userBio', params: { userId: currentUser.id } }"
+            >
+              Profile
+            </router-link>
+            <button
+              class="block text-left px-3 py-2 w-full hover:bg-black hover:text-white hover:font-semibold"
+              v-if="currentUser"
+              @click="signOut(), (showMenu = false)"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>
+    </div>
+    <div class="flex space-x-5" v-else>
+      <router-link
+        :to="{ name: 'signin' }"
+        v-if="!currentUser"
+        @click="showMenu = false"
+      >
+        Sign In
+      </router-link>
+      <span>|</span>
+      <router-link
+        :to="{ name: 'signup' }"
+        v-if="!currentUser"
+        @click="showMenu = false"
+      >
+        Sign Up
+      </router-link>
     </div>
   </div>
 </template>

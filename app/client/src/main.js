@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
 import SignIn from "./routes/SignIn.vue";
+import SignUp from "./routes/SignUp.vue";
 import Home from "./routes/Home.vue";
 import UserSocial from "./routes/UserSocial.vue";
 import UserBio from "./routes/UserBio.vue";
@@ -19,23 +20,21 @@ const router = createRouter({
       component: Home,
     },
     {
-      name: "auth",
       path: "/auth",
       children: [
         {
-          name: "signIn",
-          path: "signIn",
+          name: "signin",
+          path: "signin",
           component: SignIn,
         },
-        // {
-        //   name: "signUp",
-        //   path: "signUp",
-        //   component: SignUp,
-        // },
+        {
+          name: "signup",
+          path: "signup",
+          component: SignUp,
+        },
       ],
     },
     {
-      // name: "social",
       path: "/social/users/:userId",
       component: UserSocial,
       children: [

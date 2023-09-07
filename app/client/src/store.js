@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ref } from "vue";
 
 const currentUser = ref(null);
@@ -7,12 +8,17 @@ function setCurrentUser(user) {
 }
 
 async function updateAuthState() {
-  const res = await fetch("/api/social/whoami");
-  if (res.ok) {
-    setCurrentUser((await res.json()).data);
-  } else {
+  try {
+    let res = await axios.get("/api/social/whoami");
+    if (res.data) {
+      setCurrentUser(res.data.data);
+    } else {
+      setCurrentUser(null);
+    }
+  } catch (error) {
     setCurrentUser(null);
   }
 }
+updateAuthState();
 
 export { currentUser, setCurrentUser, updateAuthState };

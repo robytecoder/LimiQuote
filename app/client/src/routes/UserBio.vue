@@ -5,5 +5,5 @@ const user = inject("user");
 </script>
 
 <template>
-  <div>{{ user.bio }}</div>
+  <div>{{ user && user.bio }}</div>
 </template>

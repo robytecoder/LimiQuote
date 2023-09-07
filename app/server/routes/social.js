@@ -148,7 +148,8 @@ router.get("/followers/:userId", requireAuth, async (req, res) => {
     const followersIds = follows.map((follow) => follow.followerId);
     const followers = await mongo
       .collection("users")
-      .find({ id: { $in: followersIds } });
+      .find({ id: { $in: followersIds } })
+      .toArray();
     return res.json(followers.map(({ password, ...user }) => user));
   } catch (error) {
     console.error(error);

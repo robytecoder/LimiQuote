@@ -76,12 +76,13 @@ router.post(
           httpOnly: true,
           maxAge: sessionDuration * 1000,
         });
-        return res.json({
+        res.json({
           success: true,
           msg: "Autenticazione avvenuta con successo",
         });
       } else {
-        return res
+        console.log("Bad credentials");
+        res
           .status(401)
           .json({ success: false, errors: ["Username o password errati"] });
       }
@@ -96,7 +97,6 @@ router.post(
 router.post("/signout", async (req, res) => {
   try {
     res.clearCookie("token");
-    // redirect !!!
     return res.json({
       success: true,
       msg: "Logout avvenuto con successo",

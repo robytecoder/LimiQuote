@@ -1,6 +1,7 @@
 <script setup>
 import { currentUser } from "../store";
 import { ref } from "vue";
+import { buttonPrimaryClasses } from "../lib";
 import NewMessage from "../components/NewMessage.vue";
 
 const isOpen = ref(false);
@@ -8,16 +9,15 @@ const isOpen = ref(false);
 
 <template>
   <div v-if="currentUser" class="p-4">
-    <button
-      @click="isOpen = true"
-      type="button"
-      class="bg-slate-500 rounded hover:bg-slate-600 text-white px-3 py-2"
-    >
+    <button @click="isOpen = true" type="button" :class="buttonPrimaryClasses">
       Nuovo messaggio
     </button>
     <NewMessage :isOpen="isOpen" @close="isOpen = false" />
   </div>
-  <div v-else class="flex justify-center items-center">
-    <h2 class="text-2xl font-semibold">Benvenuto in LimiQuote</h2>
+  <div v-else class="flex flex-col justify-center items-center">
+    <h1 class="p-10 text-8xl font-semibold">LimiQuote</h1>
+    <h2 class="p-10 text-3xl font-semibold">
+      Express Yourself through Quotes on our Social Platform.
+    </h2>
   </div>
 </template>
