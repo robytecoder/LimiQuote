@@ -52,17 +52,17 @@ const errorMessage = ref(null);
         name="text"
         cols="30"
         rows="5"
-        class="border-gray-200 border my-2 focus:border-slate-400 focus:outline-none focus:ring-0"
+        class="font-serif border-gray-200 border my-2 focus:border-slate-400 focus:outline-none focus:ring-0"
       ></textarea>
-      <div class="flex justify-center">
-        <button
-          class="w-min px-8 mt-4"
-          type="button"
-          :class="buttonPrimaryClasses"
-        >
-          Invia
-        </button>
-      </div>
+      <!-- <div class="flex justify-center"> -->
+      <button
+        class="w-min px-8 mt-4"
+        type="submit"
+        :class="buttonPrimaryClasses"
+      >
+        Invia
+      </button>
+      <!-- </div> -->
     </form>
     <div
       v-if="errorMessage"

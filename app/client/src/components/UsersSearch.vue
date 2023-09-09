@@ -51,7 +51,8 @@ onClickOutside(searchContainer, () => {
 		</div> -->
     <div>
       <input
-        class="block shadow-sm border-gray-200 border px-3 py-0.5 w-60 text-sm"
+        class="block shadow-sm border-gray-200 border px-3 py-0.5 w-50 text-sm focus:border-slate-400 focus:outline-none focus:ring-0"
+        placeholder="Search users"
         type="text"
         v-model="query"
         @focus="searchResults.length ? (showResults = true) : null"
@@ -67,7 +68,7 @@ onClickOutside(searchContainer, () => {
         >
           <!-- :to="`/social/users/${result.id}`" -->
           <router-link
-            :to="{ name: 'userBio', params: { userId: result.id } }"
+            :to="{ name: 'userMessages', params: { userId: result.id } }"
             @click="(showResults = false), (query = '')"
             >{{ result.name }} {{ result.surname }}</router-link
           >

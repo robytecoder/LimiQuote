@@ -25,18 +25,18 @@ const signinError = ref(null);
 </script>
 
 <template>
-  <div class="flex flex-1 flex-col justify-center px-12 py-12 lg:px-8">
+  <div class="flex flex-1 flex-col justify-center px-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <!-- <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=zinc&shade=600" alt="Your Company" /> -->
       <h2
-        class="mt-10 text-center text-3xl font-semibold leading-9 tracking-tight text-gray-900"
+        class="py-8 text-center text-3xl font-semibold leading-9 tracking-tight text-gray-900"
       >
         Sign up
       </h2>
     </div>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" @submit.prevent="signIn">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <form class="space-y-2" @submit.prevent="signIn">
         <div>
           <label for="email" class="block font-semibold leading-6 text-gray-900"
             >Email address</label
@@ -51,7 +51,6 @@ const signinError = ref(null);
             />
           </div>
         </div>
-
         <div>
           <div class="flex items-center justify-between">
             <label
@@ -111,24 +110,27 @@ const signinError = ref(null);
               id="bio"
               name="bio"
               required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-zinc-600 sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
             ></textarea>
           </div>
         </div>
-
-        <div>
+        <div v-if="signinError" class="flex justify-center py-4">
+          <ErrorMessage
+            class="rounded-md w-full"
+            :message="signinError.join(', ')"
+          />
+        </div>
+        <div class="flex justify-center py-4">
           <button
             type="submit"
-            class="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-600"
+            class="rounded-md bg-black px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-zinc-800"
           >
             Register
           </button>
         </div>
       </form>
-
-      <p class="mt-10 text-center text-sm text-black">
+      <p class="pb-4 text-center text-sm text-black">
         Already a member?
-        {{ " " }}
         <router-link
           :to="{ name: 'signin' }"
           class="px-2 font-semibold leading-6 text-black text-lg hover:text-zinc-800"
@@ -137,5 +139,4 @@ const signinError = ref(null);
       </p>
     </div>
   </div>
-  <!-- <ErrorMessage v-if="signinError" :message="signinError.join(', ')" /> -->
 </template>

@@ -47,7 +47,7 @@ router.get("/messages/:userId", async (req, res) => {
     const userId = parseInt(req.params.userId);
     const messages = await mongo
       .collection("messages")
-      .find({ userId: userId })
+      .find({ userId: userId }, { sort: { id: -1 } })
       .toArray();
     if (messages) {
       res.json({ success: true, data: messages });
@@ -97,6 +97,7 @@ router.post(
       lastMessageId++;
       message.id = lastMessageId;
       message.userId = req.userId; // !!!
+      message.text = message.text.replace(/<script([^>]*)?>.*?<\/script>/, "");
       message.date = new Date();
       await mongo.collection("messages").insertOne(message);
       return res.json({ success: true, data: message });

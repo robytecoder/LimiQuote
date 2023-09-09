@@ -1,5 +1,5 @@
-<script setup></script>
+<!-- <script setup></script>
 
 <template>
   <div>auth</div>
-</template>
+</template> -->

@@ -10,7 +10,7 @@ const validateMessage = checkSchema({
     isString: { errorMessage: "Text should be a string" },
     trim: true,
     notEmpty: true,
-    escape: true,
+    // escape: true,
   },
 });
 
@@ -47,7 +47,7 @@ const validateSignup = checkSchema({
     isString: { errorMessage: "Bio should be a string" },
     trim: true,
     notEmpty: true,
-    escape: true,
+    // escape: true,
   },
   password: {
     exists: {
@@ -79,8 +79,8 @@ const validateSignin = checkSchema({
     trim: true,
     notEmpty: true,
     isLength: {
-      options: { min: 10 },
-      errorMessage: "The password must be at least 10 characters",
+      options: { min: 8 },
+      errorMessage: "The password must be at least 8 characters",
     },
   },
 });

@@ -5,5 +5,7 @@ const user = inject("user");
 </script>
 
 <template>
-  <div>{{ user && user.bio }}</div>
+  <p class="text-xl font-medium font-serif my-4 px-8 py-8 mx-auto">
+    {{ user && user.bio }}
+  </p>
 </template>

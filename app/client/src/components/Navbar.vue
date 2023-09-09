@@ -23,7 +23,7 @@ async function signOut() {
 </script>
 
 <template>
-  <div class="bg-black px-10 py-2 text-white flex justify-between">
+  <div class="bg-black px-4 py-2 text-white flex justify-between">
     <div class="flex space-x-5">
       <router-link to="/">
         <h1 class="text-xl font-semibold">LimiQuote</h1>
@@ -35,6 +35,7 @@ async function signOut() {
       <span>{{ formatUserName(currentUser) }}</span>
       <div>
         <svg
+          class="hover:cursor-pointer"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -56,7 +57,13 @@ async function signOut() {
           >
             <router-link
               class="block text-left px-3 py-2 w-full hover:bg-black hover:text-white hover:font-semibold"
-              :to="{ name: 'userBio', params: { userId: currentUser.id } }"
+              :to="{ name: 'home', params: { userId: currentUser.id } }"
+            >
+              Home
+            </router-link>
+            <router-link
+              class="block text-left px-3 py-2 w-full hover:bg-black hover:text-white hover:font-semibold"
+              :to="{ name: 'userMessages', params: { userId: currentUser.id } }"
             >
               Profile
             </router-link>
@@ -71,19 +78,20 @@ async function signOut() {
         </div>
       </div>
     </div>
-    <div class="flex space-x-5" v-else>
+    <div class="flex items-center divide-x-2 divide-white" v-else>
       <router-link
         :to="{ name: 'signin' }"
         v-if="!currentUser"
         @click="showMenu = false"
+        class="pr-4"
       >
         Sign In
       </router-link>
-      <span>|</span>
       <router-link
         :to="{ name: 'signup' }"
         v-if="!currentUser"
         @click="showMenu = false"
+        class="pl-4"
       >
         Sign Up
       </router-link>

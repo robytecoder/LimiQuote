@@ -37,13 +37,14 @@ router.post(
       lastUserId++;
       //creazione e inserimento nel db di un nuovo utente
       const user = req.body;
+      user.id = lastUserId;
+      user.password = hashPassword;
       user.name =
         user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase();
       user.surname =
         user.surname.charAt(0).toUpperCase() +
         user.surname.slice(1).toLowerCase();
-      user.password = hashPassword;
-      user.id = lastUserId;
+      user.bio = user.bio.replace(/<script([^>]*)?>.*?<\/script>/, "");
       await mongo.collection("users").insertOne(user);
       delete user.password;
       return res.json({ success: true, data: user });

@@ -24,17 +24,17 @@ const router = useRouter();
 </script>
 
 <template>
-  <div class="flex flex-1 flex-col justify-center px-12 py-12 lg:px-8">
+  <div class="flex flex-1 flex-col justify-center px-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2
-        class="mt-10 text-center text-3xl font-semibold leading-9 tracking-tight text-gray-900"
+        class="py-8 text-center text-3xl font-semibold leading-9 tracking-tight text-gray-900"
       >
         Sign in to your account
       </h2>
     </div>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" @submit.prevent="signIn">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <form class="space-y-4" @submit.prevent="signIn">
         <div>
           <label for="email" class="block font-semibold leading-6 text-gray-900"
             >Email address</label
@@ -69,15 +69,12 @@ const router = useRouter();
             />
           </div>
         </div>
-
-        <div>
+        <div class="flex justify-center py-4">
           <button type="submit" :class="buttonPrimaryClasses">Sign in</button>
         </div>
       </form>
-
-      <p class="mt-10 text-center text-sm text-black">
+      <p class="pb-4 text-center text-sm text-black">
         Not a member?
-        {{ " " }}
         <router-link
           :to="{ name: 'signup' }"
           class="px-2 font-semibold leading-6 text-black text-lg hover:text-zinc-800"
