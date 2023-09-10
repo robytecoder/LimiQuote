@@ -7,10 +7,18 @@ const route = useRoute();
 const messages = ref([]);
 
 async function getData() {
-  const response = await fetch(`/api/social/messages/${route.params.userId}`);
+  const response = await fetch(`/api/social/feed`);
+  //
   if (response.ok) {
     const results = await response.json();
     messages.value = results.data;
+    // for (let message in messages) {
+    //   const author = await fetch(`/api/social/messages/{message.userId}`);
+    //   if (author.ok) {
+    //     const result = await author.json();
+    //     message. = result.data;
+    //   }
+    // }
   }
 }
 getData();
@@ -27,12 +35,15 @@ getData();
             {{ message.text }}
           </p>
         </blockquote>
-        <figcaption class="flex items-center justify-center mt-4 space-x-3">
-          <div class="flex items-center divide-x-2 divide-black">
-            <div class="pr-3 font-medium text-black">Likes</div>
-            <div class="pl-3 text-sm font-light text-black">
+        <figcaption class="mt-6 space-x-3">
+          <div class="flex flex-row">
+            <div class="flex-1 grow text-left text-sm">
               {{ formatDate(message.date) }}
             </div>
+            <div class="flex-1 text-center font-semibold">
+              User {{ message.userId }}
+            </div>
+            <div class="flex-1 text-right">Likes</div>
           </div>
         </figcaption>
       </figure>

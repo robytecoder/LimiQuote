@@ -24,10 +24,10 @@ const errorMessage = ref(null);
   <div v-if="isOpen" class="fixed inset-0 bg-black/50"></div>
   <div
     v-if="isOpen"
-    class="fixed bg-white shadow-lg space-y-2 p-4 pb-2 rounded w-full max-w-xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+    class="fixed bg-zinc-100 shadow-lg space-y-2 p-4 pb-2 rounded w-full max-w-xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
   >
     <div class="flex justify-between items-center">
-      <h3 class="font-semibold text-lg">Nuovo messaggio</h3>
+      <h3 class="font-semibold text-lg">New Quote</h3>
       <button @click="$emit('close')">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -50,19 +50,20 @@ const errorMessage = ref(null);
     <form @submit.prevent="submit" class="flex flex-col pb-4">
       <textarea
         name="text"
+        spellcheck="false"
         cols="30"
         rows="5"
         class="font-serif border-gray-200 border my-2 focus:border-slate-400 focus:outline-none focus:ring-0"
       ></textarea>
-      <!-- <div class="flex justify-center"> -->
-      <button
-        class="w-min px-8 mt-4"
-        type="submit"
-        :class="buttonPrimaryClasses"
-      >
-        Invia
-      </button>
-      <!-- </div> -->
+      <div class="flex justify-center">
+        <button
+          class="w-min px-8 mt-4"
+          type="submit"
+          :class="buttonPrimaryClasses"
+        >
+          Share
+        </button>
+      </div>
     </form>
     <div
       v-if="errorMessage"

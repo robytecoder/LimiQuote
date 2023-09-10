@@ -192,9 +192,10 @@ router.get("/feed", requireAuth, async (req, res) => {
   try {
     const mongo = db.getDb();
     const userId = req.userId;
-    const followedIds = await mongo
+    let followedIds = await mongo
       .collection("follows")
       .distinct("followedId", { followerId: userId });
+    followedIds.push(userId);
     const feed = await mongo
       .collection("messages")
       .find({ userId: { $in: followedIds } }, { sort: { id: -1 } })

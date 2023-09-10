@@ -32,7 +32,12 @@ async function signOut() {
     </div>
 
     <div class="flex space-x-5 items-center" v-if="currentUser">
-      <span>{{ formatUserName(currentUser) }}</span>
+      <router-link
+        :to="{ name: 'userMessages', params: { userId: currentUser.id } }"
+      >
+        {{ formatUserName(currentUser) }}
+      </router-link>
+      <!-- <span>{{ formatUserName(currentUser) }}</span> -->
       <div>
         <svg
           class="hover:cursor-pointer"
@@ -65,7 +70,7 @@ async function signOut() {
               class="block text-left px-3 py-2 w-full hover:bg-black hover:text-white hover:font-semibold"
               :to="{ name: 'userMessages', params: { userId: currentUser.id } }"
             >
-              Profile
+              My Profile
             </router-link>
             <button
               class="block text-left px-3 py-2 w-full hover:bg-black hover:text-white hover:font-semibold"

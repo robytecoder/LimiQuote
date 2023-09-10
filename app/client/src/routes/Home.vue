@@ -3,19 +3,20 @@ import { currentUser } from "../store";
 import { ref } from "vue";
 import { buttonPrimaryClasses } from "../lib";
 import NewMessage from "../components/NewMessage.vue";
+import UserFeed from "../components/UserFeed.vue";
 
 const isOpen = ref(false);
 </script>
 
 <template>
   <div v-if="currentUser" class="w-full max-w-3xl mx-auto px-4">
-    <div class="flex flex-row-reverse py-8">
+    <div class="flex flex-row-reverse pt-8 pb-4">
       <button
         @click="isOpen = true"
         type="button"
         :class="buttonPrimaryClasses"
       >
-        <span class="px-1">New message</span>
+        <span class="px-1">New Quote</span>
         <div class="pl-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -36,6 +37,7 @@ const isOpen = ref(false);
       </button>
     </div>
     <NewMessage :isOpen="isOpen" @close="isOpen = false" />
+    <UserFeed />
   </div>
   <div v-else class="flex flex-col justify-center items-center">
     <h1 class="p-10 text-8xl font-semibold">LimiQuote</h1>

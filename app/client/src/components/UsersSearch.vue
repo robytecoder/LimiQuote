@@ -15,15 +15,6 @@ async function searchFromAPI(searchString) {
   }
 }
 
-// function onSearchChange(evt) {
-// 	const searchString = evt.target.value.toLowerCase()
-// 	if (searchString.length >= 1) {
-// 		searchFromAPI(searchString)
-// 	} else {
-// 		searchResults.value = []
-// 	}
-// }
-
 watchEffect(() => {
   if (query.value.length >= 1) {
     searchFromAPI(query.value);
@@ -41,14 +32,6 @@ onClickOutside(searchContainer, () => {
 
 <template>
   <div class="text-black" ref="searchContainer">
-    <!-- <div v-if="!currentUser">
-			<label class="text-xs">Search</label>
-			<input
-				class="block shadow-sm rounded-sm border-gray-200 border px-3 py-2 w-80"
-				type="text"
-				@keyup="onSearchChange"
-			/>
-		</div> -->
     <div>
       <input
         class="block shadow-sm border-gray-200 border px-3 py-0.5 w-50 text-sm focus:border-slate-400 focus:outline-none focus:ring-0"
@@ -57,7 +40,6 @@ onClickOutside(searchContainer, () => {
         v-model="query"
         @focus="searchResults.length ? (showResults = true) : null"
       />
-      <!-- @keyup="onSearchChange" -->
     </div>
     <div v-if="showResults" class="bg-zinc-800 relative">
       <ul class="absolute bg-white shadow-lg rounded w-full top-2">
@@ -66,7 +48,6 @@ onClickOutside(searchContainer, () => {
           v-for="result in searchResults"
           :key="result"
         >
-          <!-- :to="`/social/users/${result.id}`" -->
           <router-link
             :to="{ name: 'userMessages', params: { userId: result.id } }"
             @click="(showResults = false), (query = '')"

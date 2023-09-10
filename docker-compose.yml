@@ -17,5 +17,6 @@ services:
     image: mongo
     volumes:
       - ./data:/data/db
+      - ./seeds:/tmp/seeds
     ports:
       - "27017:27017"

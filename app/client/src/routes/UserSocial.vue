@@ -36,7 +36,9 @@ async function getData() {
       `/api/social/users/${route.params.userId}`
     );
     user.value = response.data.data;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error); // ...
+  }
 }
 
 getData();
@@ -199,7 +201,6 @@ provide("followers", followers);
         </li>
       </ul>
     </div>
-
     <router-view />
   </div>
 </template>
