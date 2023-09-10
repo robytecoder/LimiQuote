@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { provide, ref } from "vue";
 import { currentUser } from "../store";
 import {
@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 
 const route = useRoute();
+const router = useRouter();
 const user = ref(null);
 const followers = ref([]);
 
@@ -38,6 +39,7 @@ async function getData() {
     user.value = response.data.data;
   } catch (error) {
     console.log(error);
+    if (error.response.status === 404) router.push({ name: "home" });
   }
 }
 
@@ -48,7 +50,8 @@ provide("followers", followers);
 </script>
 
 <template>
-  <div class="w-full max-w-3xl mx-auto px-4">
+  <div v-if="!user"></div>
+  <div v-else class="w-full max-w-3xl mx-auto px-4">
     <div
       v-if="currentUser && currentUser.id == $route.params.userId"
       class="flex justify-center py-8"
