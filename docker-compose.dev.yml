@@ -8,8 +8,8 @@ services:
     ports:
       - "3000:3000"
     # "volumes" serve solo durante lo sviluppo
-    # volumes:
-    #   - ./app:/usr/src/app
+    volumes:
+      - ./app:/usr/src/app
     links:
       - "mongo:mongohost"
   mongo:
