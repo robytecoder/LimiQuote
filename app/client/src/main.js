@@ -8,7 +8,6 @@ import UserSocial from "./routes/UserSocial.vue";
 import UserBio from "./routes/UserBio.vue";
 import UserMessages from "./routes/UserMessages.vue";
 import UserFollowers from "./routes/UserFollowers.vue";
-import UserFollowed from "./routes/UserFollowed.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({

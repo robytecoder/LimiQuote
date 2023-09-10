@@ -1,7 +1,6 @@
 version: "3"
 services:
   app:
-    container_name: app
     build: .
     working_dir: /usr/src/app/server
     command: nodemon --watch /usr/src/app/server -e js app.js
@@ -13,7 +12,6 @@ services:
     links:
       - "mongo:mongohost"
   mongo:
-    container_name: mongo
     image: mongo
     volumes:
       - ./data:/data/db
