@@ -4,6 +4,7 @@ import axios from "axios";
 import { buttonPrimaryClasses } from "../lib";
 import { currentUser, updateAuthState } from "../store";
 import { useRouter } from "vue-router";
+import ErrorMessage from "../components/ErrorMessage.vue";
 
 async function signIn(evt) {
   try {
@@ -67,6 +68,11 @@ const router = useRouter();
             />
           </div>
         </div>
+        <ErrorMessage
+          v-if="signinError"
+          class="rounded-md w-full"
+          :message="signinError.join(', ')"
+        />
         <div class="flex justify-center py-4">
           <button type="submit" :class="buttonPrimaryClasses">Sign in</button>
         </div>

@@ -96,14 +96,20 @@ provide("followers", followers);
         </h2>
       </div>
       <button
-        v-if="!followers.find((follower) => follower.id == currentUser.id)"
+        v-if="
+          currentUser &&
+          !followers.find((follower) => follower.id == currentUser.id)
+        "
         :class="buttonPrimaryClasses"
         @click="follow"
       >
         Follow
       </button>
       <button
-        v-if="followers.find((follower) => follower.id == currentUser.id)"
+        v-if="
+          currentUser &&
+          followers.find((follower) => follower.id == currentUser.id)
+        "
         :class="buttonSecondaryClasses"
         @click="unfollow"
       >

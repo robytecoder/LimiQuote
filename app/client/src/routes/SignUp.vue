@@ -1,27 +1,27 @@
 <script setup>
-import { ref } from "vue";
 import axios from "axios";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { currentUser, updateAuthState } from "../store";
 import ErrorMessage from "../components/ErrorMessage.vue";
+import { updateAuthState } from "../store";
 
 const router = useRouter();
 
 async function signIn(evt) {
   try {
     const data = Object.fromEntries(new FormData(evt.currentTarget));
-    const res = await axios.post("/api/auth/signup", data);
-    signinError.value = null;
+    await axios.post("/api/auth/signup", data);
+    signupError.value = null;
     updateAuthState();
     router.push({ name: "signin" });
   } catch (error) {
     console.error(error);
-    signinError.value =
+    signupError.value =
       error?.response?.data?.errors ?? "An unknown error occurred";
   }
 }
 
-const signinError = ref(null);
+const signupError = ref(null);
 </script>
 
 <template>
@@ -110,10 +110,11 @@ const signinError = ref(null);
             ></textarea>
           </div>
         </div>
-        <div v-if="signinError" class="flex justify-center py-4">
+        <div v-if="signupError" class="flex justify-center py-4">
           <ErrorMessage
+            v-if="signupError"
             class="rounded-md w-full"
-            :message="signinError.join(', ')"
+            :message="signupError.join(', ')"
           />
         </div>
         <div class="flex justify-center py-4">

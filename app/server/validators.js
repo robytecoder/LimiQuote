@@ -75,13 +75,6 @@ const validateSignin = checkSchema({
     exists: {
       errorMessage: "Password is required",
     },
-    isString: { errorMessage: "Password should be a string" },
-    trim: true,
-    notEmpty: true,
-    isLength: {
-      options: { min: 8 },
-      errorMessage: "The password must be at least 8 characters",
-    },
   },
 });
 
