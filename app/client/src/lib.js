@@ -17,10 +17,10 @@ function formatUserName(user) {
 }
 
 const buttonPrimaryClasses =
-  "flex justify-center rounded-md border border-transparent bg-black px-3 py-2 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-zinc-800";
+  "inline-flex justify-center rounded-md border border-transparent bg-black px-3 py-2 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-zinc-800";
 
 const buttonSecondaryClasses =
-  "flex justify-center rounded-md border border-black px-3 py-2 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-zinc-100";
+  "inline-flex justify-center rounded-md border border-black px-3 py-2 text-lg font-semibold leading-6 text-black shadow-sm hover:bg-zinc-100";
 
 export {
   formatDate,

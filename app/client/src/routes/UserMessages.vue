@@ -1,9 +1,13 @@
 <script setup>
+import { computed, ref } from "vue";
+import { formatDate, formatUserName } from "../lib";
+import MessageDetails from "../components/MessageDetails.vue";
 import { useRoute } from "vue-router";
-import { ref } from "vue";
-import { formatDate } from "../lib";
 
 const route = useRoute();
+
+const currentMessageId = ref(null);
+
 const messages = ref([]);
 
 async function getData() {
@@ -14,28 +18,50 @@ async function getData() {
   }
 }
 getData();
+
+const currentMessage = computed(() =>
+  currentMessageId !== null
+    ? messages.value.find((msg) => msg.id == currentMessageId.value)
+    : null
+);
 </script>
 
 <template>
-  <div v-for="message in messages">
+  <div
+    v-for="message in messages"
+    @click="currentMessageId = message.id"
+    class="cursor-pointer"
+  >
+    {{ currentMessageTest }}
     <section
       class="bg-zinc-100 rounded-xl hover:bg-white font-serif my-4 px-8 py-8 mx-auto text-center"
     >
       <figure class="max-w-screen-md mx-auto">
         <blockquote>
-          <p class="text-xl font-medium text-black">
+          <p class="text-xl font-medium text-black line-clamp-3">
             {{ message.text }}
           </p>
         </blockquote>
-        <figcaption class="flex items-center justify-center mt-4 space-x-3">
-          <div class="flex items-center divide-x-2 divide-black">
-            <div class="pr-3 font-medium text-black">Likes</div>
-            <div class="pl-3 text-sm font-light text-black">
+        <figcaption class="mt-6 space-x-3">
+          <div class="flex flex-row">
+            <div class="flex-1 grow text-left text-sm">
               {{ formatDate(message.date) }}
+            </div>
+            <div class="flex-1 text-center font-semibold">
+              {{ formatUserName(message.author) }}
+            </div>
+            <div class="flex-1 text-right">
+              <span v-if="message.likes">{{ message.likes }} Likes</span>
             </div>
           </div>
         </figcaption>
       </figure>
     </section>
   </div>
+  <MessageDetails
+    :message="currentMessage"
+    v-if="currentMessage"
+    @changed="getData()"
+    @close="currentMessageId = null"
+  />
 </template>

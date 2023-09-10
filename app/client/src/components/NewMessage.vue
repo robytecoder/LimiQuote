@@ -13,7 +13,7 @@ async function submit(e) {
     const response = await axios.post("/api/social/messages", data);
     emit("close");
   } catch (error) {
-    errorMessage.value = error.message;
+    errorMessage.value = error.response.data.errors[0];
   }
 }
 

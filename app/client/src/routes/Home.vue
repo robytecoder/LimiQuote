@@ -5,6 +5,7 @@ import { buttonPrimaryClasses } from "../lib";
 import NewMessage from "../components/NewMessage.vue";
 import UserFeed from "../components/UserFeed.vue";
 
+const lastUpdated = ref(new Date());
 const isOpen = ref(false);
 </script>
 
@@ -36,8 +37,11 @@ const isOpen = ref(false);
         </div>
       </button>
     </div>
-    <NewMessage :isOpen="isOpen" @close="isOpen = false" />
-    <UserFeed />
+    <NewMessage
+      :isOpen="isOpen"
+      @close="(isOpen = false), (lastUpdated = new Date())"
+    />
+    <UserFeed :key="lastUpdated" />
   </div>
   <div v-else class="flex flex-col justify-center items-center">
     <h1 class="p-10 text-8xl font-semibold">LimiQuote</h1>

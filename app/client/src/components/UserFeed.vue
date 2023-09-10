@@ -1,9 +1,10 @@
 <script setup>
-import { useRoute } from "vue-router";
-import { ref } from "vue";
-import { formatDate } from "../lib";
+import { computed, ref } from "vue";
+import { formatDate, formatUserName } from "../lib";
+import MessageDetails from "./MessageDetails.vue";
 
-const route = useRoute();
+const currentMessageId = ref(null);
+
 const messages = ref([]);
 
 async function getData() {
@@ -12,26 +13,30 @@ async function getData() {
   if (response.ok) {
     const results = await response.json();
     messages.value = results.data;
-    // for (let message in messages) {
-    //   const author = await fetch(`/api/social/messages/{message.userId}`);
-    //   if (author.ok) {
-    //     const result = await author.json();
-    //     message. = result.data;
-    //   }
-    // }
   }
 }
 getData();
+
+const currentMessage = computed(() =>
+  currentMessageId !== null
+    ? messages.value.find((msg) => msg.id == currentMessageId.value)
+    : null
+);
 </script>
 
 <template>
-  <div v-for="message in messages">
+  <div
+    v-for="message in messages"
+    @click="currentMessageId = message.id"
+    class="cursor-pointer"
+  >
+    {{ currentMessageTest }}
     <section
       class="bg-zinc-100 rounded-xl hover:bg-white font-serif my-4 px-8 py-8 mx-auto text-center"
     >
       <figure class="max-w-screen-md mx-auto">
         <blockquote>
-          <p class="text-xl font-medium text-black">
+          <p class="text-xl font-medium text-black line-clamp-3">
             {{ message.text }}
           </p>
         </blockquote>
@@ -41,12 +46,20 @@ getData();
               {{ formatDate(message.date) }}
             </div>
             <div class="flex-1 text-center font-semibold">
-              User {{ message.userId }}
+              {{ formatUserName(message.author) }}
             </div>
-            <div class="flex-1 text-right">Likes</div>
+            <div class="flex-1 text-right">
+              <span v-if="message.likes">{{ message.likes }} Likes</span>
+            </div>
           </div>
         </figcaption>
       </figure>
     </section>
   </div>
+  <MessageDetails
+    :message="currentMessage"
+    v-if="currentMessage"
+    @changed="getData()"
+    @close="currentMessageId = null"
+  />
 </template>

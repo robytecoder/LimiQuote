@@ -23,6 +23,18 @@ const requireAuth = (req, res, next) => {
   }
 };
 
+const optionalUserId = (req, res, next) => {
+  const { token } = req.cookies;
+  if (!token) return next();
+  try {
+    const decoded = jwt.verify(token, "SECRET_HERE");
+    req.userId = decoded.id;
+    next();
+  } catch (error) {
+    next();
+  }
+};
+
 // GET: Visualizzazione informazione dell’utente userId
 router.get("/users/:userId", async (req, res) => {
   try {
@@ -41,7 +53,7 @@ router.get("/users/:userId", async (req, res) => {
 });
 
 // GET: Elenco dei messaggi dell’utente userId
-router.get("/messages/:userId", async (req, res) => {
+router.get("/messages/:userId", optionalUserId, async (req, res) => {
   try {
     const mongo = db.getDb();
     const userId = parseInt(req.params.userId);
@@ -49,11 +61,49 @@ router.get("/messages/:userId", async (req, res) => {
       .collection("messages")
       .find({ userId: userId }, { sort: { id: -1 } })
       .toArray();
-    if (messages) {
-      res.json({ success: true, data: messages });
-    } else {
-      res.status(404).json({ success: false, errors: ["Bad request"] });
-    }
+
+    const userIds = messages.map((message) => message.userId);
+
+    const users = await mongo
+      .collection("users")
+      .find({ id: { $in: userIds } }, { sort: { id: -1 } })
+      .toArray();
+
+    const messagesWithAuthors = messages.map((msg) => {
+      const author = users.find((user) => user.id === msg.userId);
+      delete author.password;
+      return {
+        ...msg,
+        author,
+      };
+    });
+
+    const messageIds = messages.map((msg) => msg.id);
+
+    const likes = await mongo
+      .collection("likes")
+      .find({ messageId: { $in: messageIds } })
+      .toArray();
+
+    const messagesWithAuthorsAndLikes = messagesWithAuthors.map((msg) => {
+      const messageLikes = likes.filter((like) => like.messageId == msg.id);
+      // const didILike = messageLikes.filter(like => like.userId == req.userId).length > 0
+      const didILike = messageLikes.some((like) => like.userId == req.userId);
+      return {
+        ...msg,
+        likes: messageLikes.length,
+        didILike,
+      };
+    });
+    return res.json({
+      success: true,
+      data: messagesWithAuthorsAndLikes,
+    });
+    // if (messages) {
+    //   res.json({ success: true, data: messages });
+    // } else {
+    //   res.status(404).json({ success: false, errors: ["Bad request"] });
+    // }
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, msg: "Errore interno" });
@@ -192,7 +242,7 @@ router.get("/feed", requireAuth, async (req, res) => {
   try {
     const mongo = db.getDb();
     const userId = req.userId;
-    let followedIds = await mongo
+    const followedIds = await mongo
       .collection("follows")
       .distinct("followedId", { followerId: userId });
     followedIds.push(userId);
@@ -200,7 +250,41 @@ router.get("/feed", requireAuth, async (req, res) => {
       .collection("messages")
       .find({ userId: { $in: followedIds } }, { sort: { id: -1 } })
       .toArray();
-    return res.json({ success: true, data: feed });
+    const users = await mongo
+      .collection("users")
+      .find({ id: { $in: followedIds } }, { sort: { id: -1 } })
+      .toArray();
+
+    const feedWithAuthors = feed.map((msg) => {
+      const author = users.find((user) => user.id === msg.userId);
+      delete author.password;
+      return {
+        ...msg,
+        author,
+      };
+    });
+
+    const messageIds = feed.map((msg) => msg.id);
+
+    const likes = await mongo
+      .collection("likes")
+      .find({ messageId: { $in: messageIds } })
+      .toArray();
+
+    const feedWithAuthorsAndLikes = feedWithAuthors.map((msg) => {
+      const messageLikes = likes.filter((like) => like.messageId == msg.id);
+      // const didILike = messageLikes.filter(like => like.userId == req.userId).length > 0
+      const didILike = messageLikes.some((like) => like.userId == req.userId);
+      return {
+        ...msg,
+        likes: messageLikes.length,
+        didILike,
+      };
+    });
+    return res.json({
+      success: true,
+      data: feedWithAuthorsAndLikes,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, msg: "Errore interno" });
