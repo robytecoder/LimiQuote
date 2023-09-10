@@ -43,12 +43,9 @@ onClickOutside(searchContainer, () => {
     </div>
     <div v-if="showResults" class="bg-zinc-800 relative">
       <ul class="absolute bg-white shadow-lg rounded w-full top-2">
-        <li
-          class="px-4 py-2 hover:bg-black hover:text-white"
-          v-for="result in searchResults"
-          :key="result"
-        >
+        <li v-for="result in searchResults" :key="result">
           <router-link
+            class="w-full min-w-full block px-4 py-2 hover:bg-black hover:text-white"
             :to="{ name: 'userMessages', params: { userId: result.id } }"
             @click="(showResults = false), (query = '')"
             >{{ result.name }} {{ result.surname }}</router-link
