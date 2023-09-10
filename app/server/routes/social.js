@@ -175,8 +175,8 @@ router.post("/followers/:userId", requireAuth, async (req, res) => {
   }
 });
 
-// GET[Auth]: Lista dei followers dell’utente userId
-router.get("/followers/:userId", requireAuth, async (req, res) => {
+// GET: Lista dei followers dell’utente userId
+router.get("/followers/:userId", async (req, res) => {
   try {
     const mongo = db.getDb();
     const followedId = parseInt(req.params.userId);
