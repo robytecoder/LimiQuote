@@ -52,11 +52,6 @@ const router = createRouter({
           path: "followers",
           component: UserFollowers,
         },
-        {
-          name: "userFollowed",
-          path: "followed",
-          component: UserFollowed,
-        },
       ],
     },
   ],
