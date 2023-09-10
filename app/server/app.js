@@ -4,7 +4,6 @@ const path = require("path");
 
 const auth = require("./routes/auth");
 const social = require("./routes/social");
-const other = require("./routes/other");
 const db = require("./db.js");
 
 const app = express();
@@ -16,7 +15,6 @@ app.use(express.json()); //body parsing
 app.use(cookieParser());
 app.use("/api/auth", auth);
 app.use("/api/social", social);
-app.use("/api/other", other);
 app.use("/api", (req, res) => {
   res.status(404).send();
 });

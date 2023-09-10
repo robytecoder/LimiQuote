@@ -1,5 +1,12 @@
 # LimiQuote
 
+Università degli Studi di Trieste
+Laurea Magistrale in Ingegneria Elettronica e Informatica
+
+Programmazione Web
+
+Progetto d'esame - Roberto Limina - 2022/23
+
 ## Requirements
 
 - _Docker_ and _docker-compose_

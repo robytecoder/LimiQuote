@@ -9,5 +9,5 @@ module.exports = {
     await client.connect();
     _db = client.db("social");
   },
-  getDb: () => _db, // si può fare meglio: 2/12-20:00
+  getDb: () => _db, //
 };

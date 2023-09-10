@@ -61,14 +61,11 @@ router.get("/messages/:userId", optionalUserId, async (req, res) => {
       .collection("messages")
       .find({ userId: userId }, { sort: { id: -1 } })
       .toArray();
-
     const userIds = messages.map((message) => message.userId);
-
     const users = await mongo
       .collection("users")
       .find({ id: { $in: userIds } }, { sort: { id: -1 } })
       .toArray();
-
     const messagesWithAuthors = messages.map((msg) => {
       const author = users.find((user) => user.id === msg.userId);
       delete author.password;
@@ -77,17 +74,13 @@ router.get("/messages/:userId", optionalUserId, async (req, res) => {
         author,
       };
     });
-
     const messageIds = messages.map((msg) => msg.id);
-
     const likes = await mongo
       .collection("likes")
       .find({ messageId: { $in: messageIds } })
       .toArray();
-
     const messagesWithAuthorsAndLikes = messagesWithAuthors.map((msg) => {
       const messageLikes = likes.filter((like) => like.messageId == msg.id);
-      // const didILike = messageLikes.filter(like => like.userId == req.userId).length > 0
       const didILike = messageLikes.some((like) => like.userId == req.userId);
       return {
         ...msg,
@@ -99,11 +92,6 @@ router.get("/messages/:userId", optionalUserId, async (req, res) => {
       success: true,
       data: messagesWithAuthorsAndLikes,
     });
-    // if (messages) {
-    //   res.json({ success: true, data: messages });
-    // } else {
-    //   res.status(404).json({ success: false, errors: ["Bad request"] });
-    // }
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, msg: "Errore interno" });
@@ -146,7 +134,7 @@ router.post(
       let lastMessageId = lastMessage?.id === undefined ? 0 : lastMessage.id;
       lastMessageId++;
       message.id = lastMessageId;
-      message.userId = req.userId; // !!!
+      message.userId = req.userId;
       message.text = message.text.replace(/<script([^>]*)?>.*?<\/script>/, "");
       message.date = new Date();
       await mongo.collection("messages").insertOne(message);
@@ -254,7 +242,6 @@ router.get("/feed", requireAuth, async (req, res) => {
       .collection("users")
       .find({ id: { $in: followedIds } }, { sort: { id: -1 } })
       .toArray();
-
     const feedWithAuthors = feed.map((msg) => {
       const author = users.find((user) => user.id === msg.userId);
       delete author.password;
@@ -263,17 +250,13 @@ router.get("/feed", requireAuth, async (req, res) => {
         author,
       };
     });
-
     const messageIds = feed.map((msg) => msg.id);
-
     const likes = await mongo
       .collection("likes")
       .find({ messageId: { $in: messageIds } })
       .toArray();
-
     const feedWithAuthorsAndLikes = feedWithAuthors.map((msg) => {
       const messageLikes = likes.filter((like) => like.messageId == msg.id);
-      // const didILike = messageLikes.filter(like => like.userId == req.userId).length > 0
       const didILike = messageLikes.some((like) => like.userId == req.userId);
       return {
         ...msg,

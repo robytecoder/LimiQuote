@@ -106,6 +106,6 @@ router.post("/signout", async (req, res) => {
     console.error(error);
     return res.status(500).json({ success: false, msg: "Errore interno" });
   }
-}); // se non è loggato?
+});
 
 module.exports = router;

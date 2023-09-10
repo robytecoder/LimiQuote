@@ -1,4 +1,3 @@
-// Formattatore data dei messaggi
 const formatDate = (currentDate) => {
   currentDate = new Date(currentDate);
   let date = ("0" + currentDate.getDate()).slice(-2);

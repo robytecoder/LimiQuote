@@ -9,6 +9,7 @@ import { useRouter } from "vue-router";
 
 const showMenu = ref(false);
 const menu = ref(null);
+
 onClickOutside(menu, (event) => {
   showMenu.value = false;
 });
@@ -34,10 +35,10 @@ async function signOut() {
     <div class="flex space-x-5 items-center" v-if="currentUser">
       <router-link
         :to="{ name: 'userMessages', params: { userId: currentUser.id } }"
+        class="hidden md:block"
       >
         {{ formatUserName(currentUser) }}
       </router-link>
-      <!-- <span>{{ formatUserName(currentUser) }}</span> -->
       <div>
         <svg
           class="hover:cursor-pointer"

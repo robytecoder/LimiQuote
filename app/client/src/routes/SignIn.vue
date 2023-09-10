@@ -32,7 +32,6 @@ const router = useRouter();
         Sign in to your account
       </h2>
     </div>
-
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-4" @submit.prevent="signIn">
         <div>
@@ -49,7 +48,6 @@ const router = useRouter();
             />
           </div>
         </div>
-
         <div>
           <div class="flex items-center justify-between">
             <label

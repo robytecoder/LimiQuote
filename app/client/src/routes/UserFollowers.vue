@@ -10,7 +10,7 @@ const users = inject("followers");
     <router-link
       :to="{ name: 'userMessages', params: { userId: follower.id } }"
       v-for="follower in users"
-      class="flex justify-between rounded-xl hover:bg-white bg-zinc-100 font-semibold text-lg px-8 py-4 my-4"
+      class="flex justify-center rounded-xl hover:bg-white bg-zinc-100 font-semibold text-lg px-8 py-4 my-4"
     >
       {{ formatUserName(follower) }}
     </router-link>

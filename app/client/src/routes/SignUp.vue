@@ -27,14 +27,12 @@ const signinError = ref(null);
 <template>
   <div class="flex flex-1 flex-col justify-center px-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <!-- <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=zinc&shade=600" alt="Your Company" /> -->
       <h2
         class="py-8 text-center text-3xl font-semibold leading-9 tracking-tight text-gray-900"
       >
         Sign up
       </h2>
     </div>
-
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-2" @submit.prevent="signIn">
         <div>
@@ -70,7 +68,6 @@ const signinError = ref(null);
             />
           </div>
         </div>
-
         <div>
           <label for="email" class="block font-semibold leading-6 text-gray-900"
             >Name</label
@@ -85,7 +82,6 @@ const signinError = ref(null);
             />
           </div>
         </div>
-
         <div>
           <label for="email" class="block font-semibold leading-6 text-gray-900"
             >Surname</label
@@ -100,7 +96,6 @@ const signinError = ref(null);
             />
           </div>
         </div>
-
         <div>
           <label for="bio" class="block font-semibold leading-6 text-gray-900"
             >Bio</label
