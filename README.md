@@ -1,11 +1,8 @@
 # LimiQuote
 
-Università degli Studi di Trieste
-Laurea Magistrale in Ingegneria Elettronica e Informatica
+Università degli Studi di Trieste - Laurea Magistrale in Ingegneria Elettronica e Informatica
 
-Programmazione Web
-
-Progetto d'esame - Roberto Limina - 2022/23
+Programmazione Web 2022/23- Progetto d'esame di Roberto Limina
 
 ## Requirements
 
